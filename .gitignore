@@ -1,0 +1,52 @@
+# Environment
+prod/
+venv/
+.venv/
+node_modules/
+.local/
+env/
+.env/
+data_analyst/
+dev/
+*.bat
+dredge-qwen-model/
+*.ps1
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+# .env
+.claude/
+dredge-kubeconfig.yaml
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+bulk_cancel_builds.py
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.env
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite

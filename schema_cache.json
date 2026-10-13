@@ -1,0 +1,3933 @@
+{
+    "test1": {
+        "doc_count": 14,
+        "schema": {
+            "Address": {
+                "type": "String",
+                "examples": [
+                    "10 FOXCROFT AVE",
+                    "1140 Reservoir Avenue",
+                    "67  Love Lane"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "Age": {
+                "type": "Number",
+                "examples": [
+                    67,
+                    36,
+                    35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Amount": {
+                "type": "Number",
+                "examples": [
+                    35,
+                    100,
+                    260.25
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "BeginDate": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "City": {
+                "type": "String",
+                "examples": [
+                    "Los Angeles",
+                    "New York",
+                    "Madison"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "CityStZip": {
+                "type": "String",
+                "examples": [
+                    "Greenville, RI 02828",
+                    "East Greenwich, RI 02818",
+                    "Eeter, RI 02822"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "ContDesc": {
+                "type": "String",
+                "examples": [
+                    "PAC",
+                    "Party",
+                    "In-Kind - Individual"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "ContribExplanati": {
+                "type": "String",
+                "examples": [
+                    "500",
+                    "WINRED",
+                    "550"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "ContribExplanation": {
+                "type": "String",
+                "examples": [
+                    "Loan for Tshirts",
+                    "WINRED",
+                    "General Contribution"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "ContributionID": {
+                "type": "Number",
+                "examples": [
+                    276454,
+                    910568,
+                    894506
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "Contributions.Address": {
+                "type": "String",
+                "examples": [
+                    "PO BOX 109",
+                    "60 Joseph Court",
+                    "63 Balcom Road"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.Amount": {
+                "type": "Number",
+                "examples": [
+                    35,
+                    100,
+                    1000
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.City": {
+                "type": "String",
+                "examples": [
+                    "Foster",
+                    "EAST GREENW",
+                    "PROVIDENCE"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.Date": {
+                "type": "String",
+                "examples": [
+                    "7/21/22",
+                    "7/26/06",
+                    "5/30/06"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.Employer": {
+                "type": "String",
+                "examples": [
+                    "ARAMARK",
+                    "UPS",
+                    "Consultant"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.Name": {
+                "type": "String",
+                "examples": [
+                    "BARRY BLIER",
+                    "ROBERT BENNETT",
+                    "Christine Berger"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.State": {
+                "type": "String",
+                "examples": [
+                    "RI",
+                    "R",
+                    "STATE OF RHODE ISLAND"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Contributions.Zip": {
+                "type": "String",
+                "examples": [
+                    "02",
+                    "02888",
+                    "0288"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "DepositDate": {
+                "type": "String",
+                "examples": [
+                    "100",
+                    "260.25",
+                    "312.3"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "EmpAddress": {
+                "type": "String",
+                "examples": [
+                    "10 Pine Grove C",
+                    "400 South Count",
+                    "67 Love Lane"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "EmpCityStZip": {
+                "type": "String",
+                "examples": [
+                    "WARWICK, RI 02",
+                    "Greenville, RI 02",
+                    "Warwick, Ri 0288"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "EmployerName": {
+                "type": "String",
+                "examples": [
+                    "The Talent Facto",
+                    "STATE OF RI",
+                    "A Quick Tire & A"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "EndDate": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "FirstName": {
+                "type": "String",
+                "examples": [
+                    "CHRISTINE",
+                    "M",
+                    "Jeffrey"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "FullName": {
+                "type": "String",
+                "examples": [
+                    "William Jones",
+                    "William Williams",
+                    "John Brown"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "Gender": {
+                "type": "String",
+                "examples": [
+                    "Male",
+                    "Female"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "IncompleteDesc": {
+                "type": "String",
+                "examples": [
+                    "Employer Name",
+                    "Employer Address1<BR>",
+                    "Employer Address1<BR>Employer City<BR>Employer State<BR>"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "LastName": {
+                "type": "String",
+                "examples": [
+                    "Adames",
+                    "Antonelli",
+                    "Amico"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "MPFMatchAmou": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    100,
+                    520
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "MPFMatchAmount": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    550,
+                    200
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "OrganizationNam": {
+                "type": "String",
+                "examples": [
+                    "AARON CHRIST",
+                    "Complete"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "OrganizationName": {
+                "type": "String",
+                "examples": [
+                    "AARON CHRISTOPHER GUCKIAN"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "Party": {
+                "type": "String",
+                "examples": [
+                    "Independent",
+                    "Republican",
+                    "Democrat"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "ReceiptDate": {
+                "type": "String",
+                "examples": [
+                    "9/12/22",
+                    "7/21/22",
+                    "8/23/22"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "ReceiptDesc": {
+                "type": "String",
+                "examples": [
+                    "Credit/Debit Card",
+                    "Check Contribution",
+                    "Check"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "State": {
+                "type": "String",
+                "examples": [
+                    "CA",
+                    "TX",
+                    "FL"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "Status": {
+                "type": "String",
+                "examples": [
+                    "Active",
+                    "Inactive"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "TransType": {
+                "type": "String",
+                "examples": [
+                    "Contribution",
+                    "Expenditure"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "ViewIncomplete": {
+                "type": "String",
+                "examples": [
+                    "Incomplete",
+                    "10/23/22",
+                    "6/28/22"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "VoterID": {
+                "type": "String",
+                "examples": [
+                    "USV1006",
+                    "USV1007",
+                    "USV1008"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.Age": {
+                "type": "Number",
+                "examples": [
+                    67,
+                    36,
+                    35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.City": {
+                "type": "String",
+                "examples": [
+                    "Los Angeles",
+                    "New York",
+                    "Madison"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.FullName": {
+                "type": "String",
+                "examples": [
+                    "William Jones",
+                    "William Williams",
+                    "John Brown"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.Gender": {
+                "type": "String",
+                "examples": [
+                    "Male",
+                    "Female"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.Party": {
+                "type": "String",
+                "examples": [
+                    "Independent",
+                    "Republican",
+                    "Democrat"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.State": {
+                "type": "String",
+                "examples": [
+                    "CA",
+                    "TX",
+                    "FL"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.Status": {
+                "type": "String",
+                "examples": [
+                    "Active",
+                    "Inactive"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.VoterID": {
+                "type": "String",
+                "examples": [
+                    "USV1006",
+                    "USV1007",
+                    "USV1008"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "VoterList.ZIP": {
+                "type": "String",
+                "examples": [
+                    "80014",
+                    "98101",
+                    "10001"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "ZIP": {
+                "type": "String",
+                "examples": [
+                    "80014",
+                    "98101",
+                    "10001"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "aliases.alternateRefs": {
+                "type": "String",
+                "examples": [
+                    "X-91",
+                    "X-92",
+                    "VTR-X91"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "aliases.knownAs": {
+                "type": "String",
+                "examples": [
+                    "Michael Adams",
+                    "Mike A.",
+                    "Sarah Johnson"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "aliases.primaryRef": {
+                "type": "String",
+                "examples": [
+                    "USR-7781",
+                    "USR-7782"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "campaignCommittees.affiliatedParty": {
+                "type": "String",
+                "examples": [
+                    "Democratic",
+                    "Republican",
+                    "Independent"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "campaignCommittees.committeeTitle": {
+                "type": "String",
+                "examples": [
+                    "Friends of Jane Doe",
+                    "Johnson for Congress",
+                    "Smith for Texas"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "campaignCommittees.electionCycle": {
+                "type": "Number",
+                "examples": [
+                    2025,
+                    2026
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "campaignCommittees.officeTargeted": {
+                "type": "String",
+                "examples": [
+                    "U.S. Senate",
+                    "Governor",
+                    "Mayor"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "campaignCommittees.registeredState": {
+                "type": "String",
+                "examples": [
+                    "TX",
+                    "OH",
+                    "CA"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "campaignFundStatus.assets.cash": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.assets.otherAssets": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.liabilities.accountsPayable": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.liabilities.loansPayable": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.liabilities.otherLiabilities": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.totalAssets": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.totalFundBalance": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "campaignFundStatus.totalLiabilities": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidate.address": {
+                "type": "String",
+                "examples": [
+                    "14 HIGHLAND ST CRANSTON, RI 02920",
+                    "14 HIGHLAND ST"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidate.city": {
+                "type": "String",
+                "examples": [
+                    "CRANSTON"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.contact.email": {
+                "type": "String",
+                "examples": [
+                    "CHRISPAPLAUSKAS@GMAIL.COM"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidate.contact.phone": {
+                "type": "String",
+                "examples": [
+                    "(401) 996-9196"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidate.email": {
+                "type": "String",
+                "examples": [
+                    "CHRISPAPLAUSKAS@GMAIL.COM"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.mailingAddress": {
+                "type": "String",
+                "examples": [
+                    "14 HIGHLAND ST"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.name": {
+                "type": "String",
+                "examples": [
+                    "CHRISTOPHER G PAPLAUSKAS"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidate.officeSought": {
+                "type": "String",
+                "examples": [
+                    "City/Town Council"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.partyAffiliation": {
+                "type": "String",
+                "examples": [
+                    "Republican"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.phoneNumber": {
+                "type": "String",
+                "examples": [
+                    "(401) 996-9196"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.reportingPeriod.endDate": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.reportingPeriod.startDate": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.state": {
+                "type": "String",
+                "examples": [
+                    "RI"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidate.zip": {
+                "type": "String",
+                "examples": [
+                    "02920"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidates.campaignCommittee": {
+                "type": "String",
+                "examples": [
+                    "Committee To Elect Akbar Ali",
+                    "Elect Mark Baker LLC",
+                    "FAST FORWARD SOUTH FULTON - Quasar For D2"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidates.candidate": {
+                "type": "String",
+                "examples": [
+                    "Allen, Jason",
+                    "Adeyemi, Joseph",
+                    "Arrington, James Ronald Jr."
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidates.candidateName": {
+                "type": "String",
+                "examples": [
+                    "Maria Gonzalez",
+                    "John Smith",
+                    "Jane Doe"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidates.cosa": {
+                "type": "String",
+                "examples": [
+                    "Yes",
+                    "No"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidates.district": {
+                "type": "String",
+                "examples": [
+                    "at-Large",
+                    "11",
+                    "1"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidates.electionYear": {
+                "type": "Number | String",
+                "examples": [
+                    2025,
+                    2026,
+                    "2025"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidates.jurisdiction": {
+                "type": "String",
+                "examples": [
+                    "Woodland City",
+                    "LaGrange",
+                    "South Fulton"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidates.name": {
+                "type": "String",
+                "examples": [
+                    "Allen, Jason",
+                    "Arrington, James Ronald, Jr.",
+                    "Augustine, Scott"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidates.office": {
+                "type": "String",
+                "examples": [
+                    "County Commissioner",
+                    "Board of Education",
+                    "City Commissioner"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidates.officeSought": {
+                "type": "String",
+                "examples": [
+                    "U.S. Senate",
+                    "Governor",
+                    "Mayor"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidates.party": {
+                "type": "String",
+                "examples": [
+                    "Republican",
+                    "Non-Partisan",
+                    "Democratic"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidates.stateCode": {
+                "type": "String",
+                "examples": [
+                    "TX",
+                    "OH",
+                    "CA"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "candidates.totalContributions": {
+                "type": "Number | String",
+                "examples": [
+                    0,
+                    "$41,716.54",
+                    41716.5
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "candidates.totalExpenditure": {
+                "type": "String",
+                "examples": [
+                    "$0.00",
+                    "$36,897.30",
+                    "$19,556.09"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "candidates.totalExpenditures": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    36897.3
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "cashDisbursements.aggregateExpenses": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "cashDisbursements.campaignExpenses": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "cashDisbursements.otherDisbursements": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "contributions.Address": {
+                "type": "String",
+                "examples": [
+                    "115 EAST PARK AVE. SUITE 1",
+                    "707 BROOKLYN AVE",
+                    "2300 WILSON BOULEVARD STE 700 #1097"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.Amount": {
+                "type": "Number",
+                "examples": [
+                    12000,
+                    0.9,
+                    100
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.City": {
+                "type": "String",
+                "examples": [
+                    "BOCA RATON",
+                    "ST. PETERSBURG",
+                    "FORT LAUDERDALE"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.Date": {
+                "type": "String",
+                "examples": [
+                    "06/24/2025",
+                    "04/07/2025",
+                    "04/24/2025"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.Employer": {
+                "type": "String",
+                "examples": [
+                    "KITCHEN REMODELER",
+                    "ENGINEERING",
+                    "ENGINEERING FIRM"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.Name": {
+                "type": "String",
+                "examples": [
+                    "C.A.P. ENGINEERING, INC.",
+                    "BITCOIN VOTER PROJECT, INC.",
+                    "CHEN MOORE & ASSOCIATES, INC."
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.State": {
+                "type": "String",
+                "examples": [
+                    "TX",
+                    "VA",
+                    "FL"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.Zip": {
+                "type": "String",
+                "examples": [
+                    "28792",
+                    "33712",
+                    "33309"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.address": {
+                "type": "String",
+                "examples": [
+                    "94 CALAMAN RD.",
+                    "251 FLINT AVE",
+                    "18 SUSAN CIRCLE"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.city": {
+                "type": "String",
+                "examples": [
+                    "JOHNSTON",
+                    "Cranston",
+                    "CRANSTON"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.contributionAmount": {
+                "type": "Number",
+                "examples": [
+                    1000,
+                    200,
+                    300
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.contributionType": {
+                "type": "String",
+                "examples": [
+                    "PAC",
+                    "Individual"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.depositDate": {
+                "type": "String",
+                "examples": [
+                    "2022-06-29"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.employer.address": {
+                "type": "String",
+                "examples": [
+                    "869 PARK AVE",
+                    "11 KNIGHT STREET",
+                    "1310 ATWOOD AVE"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.employer.city": {
+                "type": "String",
+                "examples": [
+                    "JOHNSTON",
+                    "PROVIDENCE",
+                    "North Kingstown"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.employer.name": {
+                "type": "String",
+                "examples": [
+                    "Retired",
+                    "OAKLAWN DEVELOPMENT LLC",
+                    "ANGELL LAW LLC"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.employer.state": {
+                "type": "String",
+                "examples": [
+                    "RI",
+                    "MA"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.employer.zip": {
+                "type": "String",
+                "examples": [
+                    "02904",
+                    "02907",
+                    "02920"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.inKindOtherReceiptsDescription": {
+                "type": "String",
+                "examples": [],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.name": {
+                "type": "String",
+                "examples": [
+                    "JAMES DONAHUE",
+                    "JEFFREY BARONE",
+                    "KEN HOPKINS"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.receiptDate": {
+                "type": "String",
+                "examples": [
+                    "2022-06-15"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.state": {
+                "type": "String",
+                "examples": [
+                    "RI",
+                    "MA"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.transactionType": {
+                "type": "String",
+                "examples": [
+                    "Check"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "contributions.zip": {
+                "type": "String",
+                "examples": [
+                    "02920",
+                    "02812",
+                    "02910"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "countySynchronizationFeed.confidence": {
+                "type": "Number",
+                "examples": [
+                    0.94,
+                    0.97
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "countySynchronizationFeed.field": {
+                "type": "String",
+                "examples": [
+                    "Party",
+                    "Status"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "countySynchronizationFeed.primaryRef": {
+                "type": "String",
+                "examples": [
+                    "USR-7781",
+                    "USR-7782"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "countySynchronizationFeed.value": {
+                "type": "String",
+                "examples": [
+                    "Independent",
+                    "Active"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "endingCashBalance": {
+                "type": "Null",
+                "examples": [],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "fieldExtracts.city": {
+                "type": "String",
+                "examples": [
+                    "Austin",
+                    "Columbus"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "fieldExtracts.name": {
+                "type": "String",
+                "examples": [
+                    "Mike A.",
+                    "S. Johnson"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "fieldExtracts.party": {
+                "type": "String",
+                "examples": [
+                    "REP",
+                    "DEM"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "fieldExtracts.state": {
+                "type": "String",
+                "examples": [
+                    "TX",
+                    "OH"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "fieldExtracts.status": {
+                "type": "String",
+                "examples": [
+                    "A",
+                    "I"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.beginningCashBalance": {
+                "type": "Number",
+                "examples": [
+                    17779.45
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashDisbursements.accountPayableRepayments": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashDisbursements.aggregateExpenses": {
+                "type": "Number",
+                "examples": [
+                    3573.15
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashDisbursements.campaignExpenses": {
+                "type": "Number",
+                "examples": [
+                    3573.15
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashDisbursements.loanRepayments": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashDisbursements.otherDisbursements": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.aggregate": {
+                "type": "Number",
+                "examples": [
+                    3096.05
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.inKindContributions": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.individuals": {
+                "type": "Number",
+                "examples": [
+                    3096.05
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.interestReceived": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.loanProceeds": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.matchingPublicFunds": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.other": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.partyBuilding": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.politicalActionCommittees": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.politicalParties": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.refundsRebates": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.cashReceipts.stateCheckOff": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.endingCashBalance": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.totalAssets": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.totalFundBalance": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "financialSummary.totalLiabilities": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "notes.party.DEM": {
+                "type": "String",
+                "examples": [
+                    "Democratic"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "notes.party.REP": {
+                "type": "String",
+                "examples": [
+                    "Republican"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "notes.status.A": {
+                "type": "String",
+                "examples": [
+                    "Active"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "notes.status.I": {
+                "type": "String",
+                "examples": [
+                    "Inactive"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "politicalParties.founded": {
+                "type": "Number",
+                "examples": [
+                    2001,
+                    1971,
+                    1828
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "politicalParties.nationalPresence": {
+                "type": "Boolean",
+                "examples": [
+                    false,
+                    true
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "politicalParties.partyName": {
+                "type": "String",
+                "examples": [
+                    "Republican Party",
+                    "Democratic Party",
+                    "Green Party"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "politicalParties.politicalIdeology": {
+                "type": "String",
+                "examples": [
+                    "Center-left, Liberal",
+                    "Libertarian",
+                    "Green, Progressive"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "politicalParties.shortCode": {
+                "type": "String",
+                "examples": [
+                    "LIB",
+                    "REP",
+                    "DEM"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "reportingPeriod.endDate": {
+                "type": "String",
+                "examples": [
+                    "2022-06-29",
+                    "2022-06-30"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "reportingPeriod.startDate": {
+                "type": "String",
+                "examples": [
+                    "2022-06-15",
+                    "2022-04-01"
+                ],
+                "data_roots": [
+                    "data",
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.beginningCashBalance": {
+                "type": "Number",
+                "examples": [
+                    17779.45
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashDisbursements.aggregateExpenses": {
+                "type": "Number",
+                "examples": [
+                    3573.15
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashDisbursements.campaignExpenses": {
+                "type": "Number",
+                "examples": [
+                    3573.15
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashDisbursements.otherDisbursements": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.aggregate": {
+                "type": "Number",
+                "examples": [
+                    3096.05,
+                    950,
+                    1200
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.address": {
+                "type": "String",
+                "examples": [
+                    "18 Susan Circle",
+                    "266 Scituate Ave",
+                    "251 Flint Ave"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.amount": {
+                "type": "Number",
+                "examples": [
+                    1000,
+                    200,
+                    300
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.city": {
+                "type": "String",
+                "examples": [
+                    "JOHNSTON",
+                    "Crancton",
+                    "Cranston"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.date": {
+                "type": "String",
+                "examples": [
+                    "2022-06-15",
+                    "2022-06-29"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.employer": {
+                "type": "String",
+                "examples": [
+                    "City of Cranston",
+                    "Retired",
+                    "Angell Law llc"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.name": {
+                "type": "String",
+                "examples": [
+                    "Aggregate from 6/15/2022 fundraiser",
+                    "Alan Conca",
+                    "JAMES DONAHUE"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.state": {
+                "type": "String",
+                "examples": [
+                    "RI",
+                    "MA"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.contributions.zip": {
+                "type": "String",
+                "examples": [
+                    "02920",
+                    "02903",
+                    "02812"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.individuals": {
+                "type": "Number",
+                "examples": [
+                    4900,
+                    950
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.politicalActionCommittees": {
+                "type": "Number",
+                "examples": [
+                    1250
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.cashReceipts.politicalParties": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "summaryOfActivity.endingCashBalance": {
+                "type": "Number",
+                "examples": [
+                    23452.35
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.Age": {
+                "type": "Number",
+                "examples": [
+                    67,
+                    36,
+                    35
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.City": {
+                "type": "String",
+                "examples": [
+                    "Los Angeles",
+                    "New York",
+                    "Madison"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.Gender": {
+                "type": "String",
+                "examples": [
+                    "Male",
+                    "Female"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.Name": {
+                "type": "String",
+                "examples": [
+                    "William Jones",
+                    "William Williams",
+                    "John Brown"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.Party": {
+                "type": "String",
+                "examples": [
+                    "Independent",
+                    "Republican",
+                    "Democrat"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.State": {
+                "type": "String",
+                "examples": [
+                    "CA",
+                    "TX",
+                    "FL"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.Status": {
+                "type": "String",
+                "examples": [
+                    "Active",
+                    "Inactive"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.VoterID": {
+                "type": "String",
+                "examples": [
+                    "USV1006",
+                    "USV1007",
+                    "USV1008"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            },
+            "voters.ZIP": {
+                "type": "String",
+                "examples": [
+                    "80014",
+                    "98101",
+                    "10001"
+                ],
+                "data_roots": [
+                    "extracted_data"
+                ]
+            }
+        },
+        "last_updated": "2026-02-25T12:48:44.106365"
+    },
+    "test1test1": {
+        "doc_count": 0,
+        "schema": {},
+        "last_updated": "2026-02-24T11:55:30.481103"
+    },
+    "hehe": {
+        "doc_count": 5,
+        "schema": {
+            "data.Address": {
+                "type": "String",
+                "examples": [
+                    "400 South Count",
+                    "10 FOXCROFT A",
+                    "10 Pine Grove C"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Age": {
+                "type": "Number",
+                "examples": [
+                    67,
+                    36,
+                    35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Amount": {
+                "type": "Number",
+                "examples": [
+                    35,
+                    100,
+                    260.25
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.BeginDate": {
+                "type": "String",
+                "examples": [
+                    "2000-01-01",
+                    "2006-04-12",
+                    "2022-08-22"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.CandidateCommittee": {
+                "type": "String",
+                "examples": [
+                    "Plumbers & Pipefitters Local 123 PAC Fun (PAC)",
+                    "Gibson, Kyle Chaderwick (NPA)(AGR)",
+                    "Metro-Broward Firefighters Political Com (PAC)"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.City": {
+                "type": "String",
+                "examples": [
+                    "Denver",
+                    "Phoenix",
+                    "Seattle"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.CityStZip": {
+                "type": "String",
+                "examples": [
+                    "Wakefield, RI 02",
+                    "WARWICK, RI 02",
+                    "Greenville, RI 02"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ContDesc": {
+                "type": "String",
+                "examples": [
+                    "Moira Fay Fay, Moira",
+                    "Michael Favicchio Favicchio Esq, M",
+                    "Individual"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ContribExplanati": {
+                "type": "String",
+                "examples": [
+                    "WINRED 520",
+                    "0 Richard Amico",
+                    "0 GLADYS ALLEN"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ContributionID": {
+                "type": "Number",
+                "examples": [
+                    276454,
+                    910568,
+                    894506
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ContributorName": {
+                "type": "String",
+                "examples": [
+                    "GOD, FAMILY, & COUNTRY PAC",
+                    "C.A.P. ENGINEERING, INC.",
+                    "CHEN MOORE & ASSOCIATES, INC."
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Date": {
+                "type": "String",
+                "examples": [
+                    "2025-02-26",
+                    "2025-06-27",
+                    "2025-03-26"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.DepositDate": {
+                "type": "String",
+                "examples": [
+                    "2022-10-19",
+                    "2022-08-23",
+                    "2022-11-04"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.EmpAddress": {
+                "type": "String",
+                "examples": [
+                    "23 Rogler Farm Smithfield, RI 02",
+                    "48 WESLEYAN A PROVIDENCE, R",
+                    "1 Becton Drive Franklin Lanes, N"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.EmpCityStZip": {
+                "type": "String",
+                "examples": [
+                    "Wakefield, RI 02",
+                    "Johnston, RI 029",
+                    "Greenville, RI 02"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.EmployerName": {
+                "type": "String",
+                "examples": [
+                    "United States Ar",
+                    "SELF",
+                    "Retired"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.EndDate": {
+                "type": "String",
+                "examples": [
+                    "2000-01-01",
+                    "2006-04-12",
+                    "2022-09-01"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.FirstName": {
+                "type": "String",
+                "examples": [
+                    "Pet",
+                    "Jeffre",
+                    "CHRIST"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Full Name": {
+                "type": "String",
+                "examples": [
+                    "Amelia Miller",
+                    "Daniel Davis",
+                    "William Jones"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.FullName": {
+                "type": "String",
+                "examples": [
+                    "ALLEN, CHRIST",
+                    "Andrade, Stacey",
+                    "Ahern, Thomas"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Gender": {
+                "type": "String",
+                "examples": [
+                    "Male",
+                    "Female"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.IncompleteDesc": {
+                "type": "String",
+                "examples": [
+                    "Employer Name<",
+                    "AARON CHRIST",
+                    "AARON CHRIST Incomplete"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.InkindDesc": {
+                "type": "String",
+                "examples": [
+                    "1.00 PER MEMBER AT 168",
+                    "10 DONORS @ $10.00",
+                    "10 DONORS @ $3.00"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.LastName": {
+                "type": "String",
+                "examples": [
+                    "Almonte",
+                    "Amico",
+                    "Antonelli"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.MPFMatchAmou": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    550,
+                    200
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Occupation": {
+                "type": "String",
+                "examples": [
+                    "ENGINEERING",
+                    "ENGINEERING FIRM",
+                    "KITCHEN REMODELER"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.OrganizationNam": {
+                "type": "String",
+                "examples": [
+                    "THOMAS DACEY",
+                    "Individual",
+                    "WINRED"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Party": {
+                "type": "String",
+                "examples": [
+                    "Republican",
+                    "Democrat",
+                    "Independent"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ReceiptDate": {
+                "type": "String",
+                "examples": [
+                    "2022-11-01",
+                    "2022-09-22",
+                    "2022-10-19"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ReceiptDesc": {
+                "type": "String",
+                "examples": [
+                    "Electronic Pay System",
+                    "Check",
+                    "WINRED"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.State": {
+                "type": "String",
+                "examples": [
+                    "FL",
+                    "AZ",
+                    "CA"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Status": {
+                "type": "String",
+                "examples": [
+                    "Inactive",
+                    "Active"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.TransType": {
+                "type": "String",
+                "examples": [
+                    "Contribution",
+                    "Loan Contribution",
+                    "Electronic Pay System Contribution"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Typ": {
+                "type": "String",
+                "examples": [
+                    "CAS",
+                    "MUC",
+                    "CHE"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ViewIncomplete": {
+                "type": "String",
+                "examples": [
+                    "9/10/22",
+                    "9/14/22",
+                    "8/22/22"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Voter ID": {
+                "type": "String",
+                "examples": [
+                    "USV1001",
+                    "USV1005",
+                    "USV1010"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.ZIP": {
+                "type": "String",
+                "examples": [
+                    "10001",
+                    "92101",
+                    "43004"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.Zip": {
+                "type": "String",
+                "examples": [
+                    "28792",
+                    "33137",
+                    "33134"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.campaignFundStatus.cash": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.campaignFundStatus.otherAssets": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.campaignFundStatus.totalAssets": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidate": {
+                "type": "String",
+                "examples": [
+                    "Allen, Jason",
+                    "Arnold, Colin",
+                    "Andy, Baxter"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.address": {
+                "type": "String",
+                "examples": [
+                    "14 HIGHLAND ST CRANSTON, RI 02920"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.email": {
+                "type": "String",
+                "examples": [
+                    "CHRISPAPLAUSKAS@GMAIL.COM"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.keyNumber": {
+                "type": "String",
+                "examples": [
+                    "7490",
+                    "7,490"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.mailingAddress": {
+                "type": "String",
+                "examples": [],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.name": {
+                "type": "String",
+                "examples": [
+                    "CHRISTOPHER G PAPLAUSKAS"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.officeSought": {
+                "type": "String",
+                "examples": [
+                    "City/Town Council"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.partyAffiliation": {
+                "type": "String",
+                "examples": [
+                    "Republican"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.phoneNumber": {
+                "type": "String",
+                "examples": [
+                    "(401) 996-9196"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.candidateInfo.politicalParty": {
+                "type": "String",
+                "examples": [
+                    "Republican"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.committee": {
+                "type": "String",
+                "examples": [
+                    "City",
+                    "To Elect Representative",
+                    "Rutledge"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.contributions": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    41716.5
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.district": {
+                "type": "Number | String",
+                "examples": [
+                    1,
+                    2,
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.election_office": {
+                "type": "String",
+                "examples": [
+                    "Partisan",
+                    "Mayor",
+                    "Public Board of Non-"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.expenditures": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    36897.3
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.jurisdiction": {
+                "type": "String",
+                "examples": [
+                    "Mayor",
+                    "State",
+                    "City"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.liabilitiesAndFundBalance.liabilities.accountsPayable": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.liabilitiesAndFundBalance.liabilities.loansPayable": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.liabilitiesAndFundBalance.liabilities.otherLiabilities": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.liabilitiesAndFundBalance.totalFundBalance": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.liabilitiesAndFundBalance.totalLiabilities": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.liabilitiesAndFundBalance.totalLiabilityFundBalance": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.party": {
+                "type": "String",
+                "examples": [
+                    "Other",
+                    "Partisan",
+                    "No"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.reportingPeriod.periodBeginning": {
+                "type": "String",
+                "examples": [
+                    "2022-06-15",
+                    "2022-04-01"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.reportingPeriod.periodEnding": {
+                "type": "String",
+                "examples": [
+                    "2022-06-29",
+                    "2022-06-30"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.beginningCashBalance": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    17779.45
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashDisbursements.accountPayableRepayments": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashDisbursements.aggregateExpenses": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    27025.5
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashDisbursements.campaignExpenses": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    3573.15
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashDisbursements.loanRepayment": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashDisbursements.otherDisbursements": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.aggregate": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    2800,
+                    1200
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.individuals": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    450,
+                    4900
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.interestReceived": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.loanProceeds": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.matchingPublicFunds": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.other": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.partyBuilding": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.politicalActionCommittees": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    1250
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.politicalParties": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.refundRebate": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.cashReceipts.stateCheckOff": {
+                "type": "Number",
+                "examples": [
+                    0
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.summaryOfActivity.endingCashBalance": {
+                "type": "Number",
+                "examples": [
+                    0,
+                    23452.35
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "data.year": {
+                "type": "Number",
+                "examples": [
+                    2025
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "doc_id": {
+                "type": "String",
+                "examples": [
+                    "f1f572c1-9a0a-4da7-918c-387c674e8790",
+                    "e728b767-261e-4140-b391-dfaab2ff2c14",
+                    "626d2258-76a2-4499-ba69-a34348d0e40f"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Address.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Age.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Amount.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.BeginDate.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.BeginDate.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.CandidateCommittee.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.City.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.CityStZip.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ContDesc.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ContribExplanati.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ContributionID.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ContributorName.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Date.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Date.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.DepositDate.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.DepositDate.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.EmpAddress.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.EmpCityStZip.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.EmployerName.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.EndDate.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.EndDate.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.FirstName.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Full Name.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.FullName.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Gender.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.IncompleteDesc.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.InkindDesc.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.LastName.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.MPFMatchAmou.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Occupation.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.OrganizationNam.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Party.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ReceiptDate.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ReceiptDate.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ReceiptDesc.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.State.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Status.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.TransType.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Typ.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ViewIncomplete.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Voter ID.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.ZIP.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.Zip.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.candidate.description": {
+                "type": "String",
+                "examples": [
+                    "Name of the candidate or organization"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.candidate.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.committee.description": {
+                "type": "String",
+                "examples": [
+                    "Committee name"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.committee.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.contributions.description": {
+                "type": "String",
+                "examples": [
+                    "Total contributions"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.contributions.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.district.description": {
+                "type": "String",
+                "examples": [
+                    "District number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.district.type": {
+                "type": "String",
+                "examples": [
+                    "integer"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.election_office.description": {
+                "type": "String",
+                "examples": [
+                    "Office being contested"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.election_office.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.expenditures.description": {
+                "type": "String",
+                "examples": [
+                    "Total expenditures"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.expenditures.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.jurisdiction.description": {
+                "type": "String",
+                "examples": [
+                    "Geographic jurisdiction"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.jurisdiction.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.party.description": {
+                "type": "String",
+                "examples": [
+                    "Political party affiliation"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.party.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.year.description": {
+                "type": "String",
+                "examples": [
+                    "Election year"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.properties.year.type": {
+                "type": "String",
+                "examples": [
+                    "integer"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.required": {
+                "type": "String",
+                "examples": [
+                    "State",
+                    "City",
+                    "Full Name"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.items.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.campaignFundStatus.properties.cash.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.campaignFundStatus.properties.otherAssets.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.campaignFundStatus.properties.totalAssets.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.campaignFundStatus.required": {
+                "type": "String",
+                "examples": [
+                    "otherAssets",
+                    "totalAssets",
+                    "cash"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.campaignFundStatus.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.address.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.email.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.keyNumber.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.mailingAddress.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.name.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.officeSought.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.partyAffiliation.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.phoneNumber.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.properties.politicalParty.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.required": {
+                "type": "String",
+                "examples": [
+                    "phoneNumber",
+                    "address",
+                    "email"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.candidateInfo.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.liabilities.properties.accountsPayable.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.liabilities.properties.loansPayable.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.liabilities.properties.otherLiabilities.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.liabilities.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.totalFundBalance.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.totalLiabilities.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.properties.totalLiabilityFundBalance.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.required": {
+                "type": "String",
+                "examples": [
+                    "totalLiabilities",
+                    "liabilities",
+                    "totalFundBalance"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.liabilitiesAndFundBalance.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.reportingPeriod.properties.periodBeginning.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.reportingPeriod.properties.periodBeginning.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.reportingPeriod.properties.periodEnding.format": {
+                "type": "String",
+                "examples": [
+                    "date"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.reportingPeriod.properties.periodEnding.type": {
+                "type": "String",
+                "examples": [
+                    "string"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.reportingPeriod.required": {
+                "type": "String",
+                "examples": [
+                    "periodEnding",
+                    "periodBeginning"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.reportingPeriod.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.beginningCashBalance.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashDisbursements.properties.accountPayableRepayments.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashDisbursements.properties.aggregateExpenses.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashDisbursements.properties.campaignExpenses.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashDisbursements.properties.loanRepayment.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashDisbursements.properties.otherDisbursements.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashDisbursements.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.aggregate.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.individuals.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.interestReceived.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.loanProceeds.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.matchingPublicFunds.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.other.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.partyBuilding.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.politicalActionCommittees.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.politicalParties.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.refundRebate.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.properties.stateCheckOff.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.cashReceipts.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.properties.endingCashBalance.type": {
+                "type": "String",
+                "examples": [
+                    "number"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.required": {
+                "type": "String",
+                "examples": [
+                    "beginningCashBalance",
+                    "cashDisbursements",
+                    "endingCashBalance"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.properties.summaryOfActivity.type": {
+                "type": "String",
+                "examples": [
+                    "object"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.required": {
+                "type": "String",
+                "examples": [
+                    "summaryOfActivity",
+                    "reportingPeriod",
+                    "liabilitiesAndFundBalance"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.title": {
+                "type": "String",
+                "examples": [
+                    "Contributions",
+                    "Campaign Finance Summary",
+                    "Campaign Contributions and Expenditures"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            },
+            "schema.type": {
+                "type": "String",
+                "examples": [
+                    "object",
+                    "array"
+                ],
+                "data_roots": [
+                    "data"
+                ]
+            }
+        },
+        "last_updated": "2026-02-26T14:35:27.864405"
+    }
+}

@@ -1,0 +1,55 @@
+name: Build and Push csv-pipeline-production to DigitalOcean Container Registry
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "csv_importer/**"
+      - "Dockerfile.csv_pipeline.prod"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "csv_importer/**"
+      - "Dockerfile.csv_pipeline.prod"
+  workflow_dispatch:
+
+env:
+  DIGITALOCEAN_REGISTRY: registry.digitalocean.com/dredge
+  DOCKER_REPOSITORY: csv-pipeline-production
+
+jobs:
+  build-and-push:
+    name: Build and Push to DigitalOcean Container Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install doctl
+        run: |
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.99.0/doctl-1.99.0-linux-amd64.tar.gz | tar -xzv
+          sudo mv doctl /usr/local/bin
+
+      - name: Authenticate doctl
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        run: |
+          doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
+
+      - name: Login to DigitalOcean Container Registry
+        run: echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | docker login ${{ env.DIGITALOCEAN_REGISTRY }} -u doctl --password-stdin
+
+      - name: Build, tag, and push image to DigitalOcean Container Registry
+        run: |
+          IMAGE_TAG=latest
+          docker build -f Dockerfile.csv_pipeline.prod -t ${{ env.DIGITALOCEAN_REGISTRY }}/$DOCKER_REPOSITORY:$IMAGE_TAG .
+          docker push ${{ env.DIGITALOCEAN_REGISTRY }}/$DOCKER_REPOSITORY:$IMAGE_TAG
+
+      - name: Configure kubectl
+        run: |
+          doctl kubernetes cluster kubeconfig save ${{ secrets.PROD_CLUSTER_ID }}
+
+      - name: Restart Kubernetes deployment
+        run: |
+          kubectl rollout restart deployment -n dredge csv-pipeline-production

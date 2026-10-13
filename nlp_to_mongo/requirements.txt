@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+motor
+pydantic
+groq
+python-dotenv
+requests
+redis
+boto3

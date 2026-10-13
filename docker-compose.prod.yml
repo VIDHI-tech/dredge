@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway.prod
+    container_name: dredge-gateway-prod
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    container_name: dredge-frontend-prod
+    ports:
+      - "8080:80"
+
+  csv_pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile.csv_pipeline.prod
+    container_name: dredge-csv-pipeline-prod
+    env_file:
+      - .env
+
+  image_pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile.image_pipeline.prod
+    container_name: dredge-image-pipeline-prod
+    env_file:
+      - .env
+
+  pdf_pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile.pdf_pipeline.prod
+    container_name: dredge-pdf-pipeline-prod
+    env_file:
+      - .env
+
+  unified_processor:
+    build:
+      context: .
+      dockerfile: Dockerfile.unified_processor.prod
+    container_name: dredge-unified-processor-prod
+    env_file:
+      - .env

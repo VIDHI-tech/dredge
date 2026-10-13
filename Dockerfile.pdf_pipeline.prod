@@ -1,0 +1,47 @@
+FROM python:3.11-slim
+
+# Prevent Python from writing .pyc files and keeping stdout unbuffered
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Create a non-root user and group for security
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
+# Copy PDF processor requirements
+COPY pdf_processor/requirements.txt pdf_processor/
+# Also need general requirements if any exist at root (check cache_utils etc)
+# For simplicity, we'll install all to ensure shared utils work
+COPY auth/requirements.txt auth/
+COPY image_processor/requirements.txt image_processor/
+COPY csv_importer/requirements.txt csv_importer/
+COPY mongo_graph/requirements.txt mongo_graph/
+COPY nlp_to_mongo/requirements.txt nlp_to_mongo/
+
+RUN cat auth/requirements.txt \
+    pdf_processor/requirements.txt \
+    image_processor/requirements.txt \
+    csv_importer/requirements.txt \
+    mongo_graph/requirements.txt \
+    nlp_to_mongo/requirements.txt > /tmp/all_reqs.txt && \
+    pip install --no-cache-dir -r /tmp/all_reqs.txt
+
+# Copy the code
+COPY . .
+
+# Change ownership of the app directory to the non-root user
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user
+USER appuser
+
+ENV PYTHONPATH=/app
+
+# Run the PDF pipeline worker
+CMD ["python", "-m", "pdf_processor.worker_pipeline"]

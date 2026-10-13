@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dredge — Smart Data Query</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131a;
+            --surface-2: #1a1a24;
+            --surface-3: #22222e;
+            --accent: #7c5cfc;
+            --accent-glow: rgba(124, 92, 252, 0.25);
+            --accent-2: #00d4aa;
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --border: #2a2a3a;
+            --danger: #ff5577;
+            --radius: 12px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .app {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .badge {
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Step Indicator */
+        .steps {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 28px;
+            background: var(--surface);
+            padding: 10px 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-dim);
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .step.active {
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .step.done {
+            color: var(--accent-2);
+        }
+
+        .step-num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--surface-3);
+            flex-shrink: 0;
+        }
+
+        .step.active .step-num {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .step.done .step-num {
+            background: var(--accent-2);
+            color: #000;
+        }
+
+        .step-arrow {
+            color: var(--border);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .controls input {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .controls input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .controls input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #9370ff);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--accent-2);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-2);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Schema Panel */
+        .schema-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .schema-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .schema-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schema-toggle {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .schema-body {
+            padding: 16px;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .schema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 8px;
+        }
+
+        .schema-field {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            padding: 6px 10px;
+            background: var(--surface-2);
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .field-name {
+            font-weight: 600;
+            color: var(--text);
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .field-type {
+            color: var(--accent);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .field-examples {
+            color: var(--text-dim);
+            font-size: 11px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Query Display */
+        .query-display {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .query-display-header {
+            padding: 12px 18px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .query-display pre {
+            padding: 16px 18px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--accent-2);
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 0;
+        }
+
+        /* Results */
+        .results-section {
+            display: none;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            border-radius: var(--radius) var(--radius) 0 0;
+            border: 1px solid var(--border);
+        }
+
+        .results-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .results-count {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .doc-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px 0;
+        }
+
+        .doc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .doc-card-header {
+            padding: 10px 16px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .doc-card-header .doc-label {
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .fv-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .fv-table td {
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .fv-table td:first-child {
+            width: 35%;
+            color: var(--accent-2);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            background: var(--surface-2);
+        }
+
+        .fv-table td:last-child {
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .fv-table tr:hover td {
+            background: var(--surface-3);
+        }
+
+        .fv-section-header td {
+            padding: 10px 16px 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--surface) !important;
+            border-bottom: 2px solid var(--border);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0 0 var(--radius) var(--radius);
+            border-top: none;
+        }
+
+        .page-info {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        /* Loading / Error */
+        .loading-bar {
+            display: none;
+            margin-bottom: 24px;
+        }
+
+        .loading-bar .bar-track {
+            height: 3px;
+            background: var(--surface-3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loading-bar .bar-fill {
+            height: 100%;
+            width: 30%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 3px;
+            animation: loading 1.2s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(400%);
+            }
+        }
+
+        .loading-bar .bar-text {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .error-msg {
+            color: var(--danger);
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        /* Data Tables (spreadsheet-like) */
+        .data-table-wrapper {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .data-table thead th {
+            position: sticky;
+            top: 0;
+            background: var(--surface-3);
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--accent);
+            text-align: left;
+            z-index: 1;
+        }
+
+        .data-table tbody td {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .data-table tbody tr:hover td {
+            background: var(--surface-2);
+        }
+
+        .data-table .row-num {
+            color: var(--text-dim);
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            width: 40px;
+        }
+
+        .null-val {
+            color: var(--text-dim);
+            font-style: italic;
+            font-size: 11px;
+        }
+
+        .obj-val {
+            color: var(--text-dim);
+            font-family: 'Consolas', monospace;
+            font-size: 11px;
+        }
+
+        /* Expandable Card Body */
+        .doc-card-body.collapsed {
+            display: none;
+        }
+
+        .doc-card-header .expand-icon {
+            font-size: 10px;
+            color: var(--text-dim);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        /* Sub-table sections inside cards */
+        .sub-table-section {
+            border-top: 1px solid var(--border);
+        }
+
+        .sub-table-header {
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--surface-2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>Dredge Query Engine</h1>
+            <span class="badge">CONTEXT-AWARE</span>
+        </div>
+
+        <div class="steps" id="steps">
+            <div class="step" data-step="1">
+                <span class="step-num">1</span> Discover Schema
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step" data-step="2">
+                <span class="step-num">2</span> Translate Query
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step" data-step="3">
+                <span class="step-num">3</span> Execute
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step" data-step="4">
+                <span class="step-num">4</span> Paginated Fetch
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step" data-step="5">
+                <span class="step-num">5</span> Results
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="collection" placeholder="Collection name" value="test1" style="max-width: 200px;">
+            <input type="text" id="query-text"
+                placeholder="Ask anything — e.g. 'Show high-value invoices from California'">
+            <button class="btn btn-primary" id="search-btn">Search</button>
+            <button class="btn btn-secondary" id="refresh-btn">↻ Refresh Schema</button>
+        </div>
+
+        <div class="loading-bar" id="loading">
+            <div class="bar-track">
+                <div class="bar-fill"></div>
+            </div>
+            <div class="bar-text" id="loading-text">Processing...</div>
+        </div>
+
+        <div class="error-msg" id="error-msg"></div>
+
+        <div class="schema-panel" id="schema-panel">
+            <div class="schema-header" id="schema-toggle">
+                <h3>📋 Discovered Schema</h3>
+                <span class="schema-toggle">▼</span>
+            </div>
+            <div class="schema-body" id="schema-body">
+                <div class="schema-grid" id="schema-grid"></div>
+            </div>
+        </div>
+
+        <div class="query-display" id="query-display">
+            <div class="query-display-header">⚡ Generated MongoDB Query</div>
+            <pre id="query-json"></pre>
+        </div>
+
+        <div class="results-section" id="results-section">
+            <div class="results-header">
+                <h3>Results</h3>
+                <span class="results-count" id="results-count"></span>
+            </div>
+            <div class="doc-cards" id="doc-cards"></div>
+            <div class="pagination" id="pagination">
+                <button class="btn btn-secondary page-btn" id="prev-btn">← Previous</button>
+                <span class="page-info" id="page-info">Page 1</span>
+                <button class="btn btn-secondary page-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Base URL Configuration
+        const API_BASE_URL = '';
+
+        // DOM refs
+        const $collection = document.getElementById('collection');
+        const $queryText = document.getElementById('query-text');
+        const $searchBtn = document.getElementById('search-btn');
+        const $refreshBtn = document.getElementById('refresh-btn');
+        const $loading = document.getElementById('loading');
+        const $loadingTxt = document.getElementById('loading-text');
+        const $errorMsg = document.getElementById('error-msg');
+        const $schemaPanel = document.getElementById('schema-panel');
+        const $schemaGrid = document.getElementById('schema-grid');
+        const $schemaToggle = document.getElementById('schema-toggle');
+        const $schemaBody = document.getElementById('schema-body');
+        const $queryDisplay = document.getElementById('query-display');
+        const $queryJson = document.getElementById('query-json');
+        const $resultsSection = document.getElementById('results-section');
+        const $resultsCount = document.getElementById('results-count');
+        const $tableHead = document.getElementById('table-head');
+        const $tableBody = document.getElementById('table-body');
+        const $pagination = document.getElementById('pagination');
+        const $prevBtn = document.getElementById('prev-btn');
+        const $nextBtn = document.getElementById('next-btn');
+        const $pageInfo = document.getElementById('page-info');
+
+        let currentPage = 1;
+        let currentPageSize = 50;
+        let currentTotalCount = 0;
+        let lastQueryText = '';
+
+        // Step indicator
+        function setStep(n, state) {
+            document.querySelectorAll('.step').forEach(el => {
+                const s = parseInt(el.dataset.step);
+                el.classList.remove('active', 'done');
+                if (s < n) el.classList.add('done');
+                else if (s === n) el.classList.add(state || 'active');
+            });
+        }
+
+        // Schema toggle
+        let schemaOpen = true;
+        $schemaToggle.addEventListener('click', () => {
+            schemaOpen = !schemaOpen;
+            $schemaBody.style.display = schemaOpen ? 'block' : 'none';
+            $schemaToggle.querySelector('.schema-toggle').textContent = schemaOpen ? '▼' : '▶';
+        });
+
+        // Load schema on collection change
+        async function loadSchema() {
+            const col = $collection.value.trim();
+            if (!col) return;
+
+            setStep(1, 'active');
+            $loadingTxt.textContent = 'Discovering schema...';
+            $loading.style.display = 'block';
+
+            try {
+                // Updated fetch call
+                const res = await fetch(`${API_BASE_URL}/schema/${encodeURIComponent(col)}`);
+                if (!res.ok) throw new Error('Failed to load schema');
+                const data = await res.json();
+
+                renderSchema(data.schema);
+                $schemaPanel.style.display = 'block';
+                setStep(1, 'done');
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                $loading.style.display = 'none';
+            }
+        }
+
+        function renderSchema(schema) {
+            $schemaGrid.innerHTML = '';
+            for (const [field, info] of Object.entries(schema)) {
+                const fType = (info && info.type) ? info.type : 'Unknown';
+                const examples = (info && info.examples) ? info.examples.slice(0, 2) : [];
+                const el = document.createElement('div');
+                el.className = 'schema-field';
+                el.innerHTML = `
+                    <span class="field-name">${escHtml(field)}</span>
+                    <span class="field-type">${escHtml(fType)}</span>
+                    <span class="field-examples">${escHtml(examples.join(', '))}</span>
+                `;
+                $schemaGrid.appendChild(el);
+            }
+        }
+
+        // Search
+        $searchBtn.addEventListener('click', () => {
+            currentPage = 1;
+            executeSearch();
+        });
+
+        $queryText.addEventListener('keydown', e => {
+            if (e.key === 'Enter') { currentPage = 1; executeSearch(); }
+        });
+
+        async function executeSearch() {
+            const text = $queryText.value.trim();
+            const col = $collection.value.trim();
+            if (!text || !col) { showError('Please enter both collection name and query.'); return; }
+
+            lastQueryText = text;
+            clearError();
+            $queryDisplay.style.display = 'none';
+            $resultsSection.style.display = 'none';
+
+            setStep(2, 'active');
+            showLoading('Translating your query with AI...');
+
+            try {
+                setStep(3, 'active');
+                $loadingTxt.textContent = 'Executing query...';
+
+                // Updated fetch call
+                const res = await fetch(`${API_BASE_URL}/convert`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text, collection: col, execute: true,
+                        page: currentPage, page_size: currentPageSize
+                    })
+                });
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => null);
+                    throw new Error(errData?.detail || `Server error: ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                // Show query
+                setStep(4, 'active');
+                $queryJson.textContent = JSON.stringify(data.mongo_query, null, 2);
+                $queryDisplay.style.display = 'block';
+
+                // Show results
+                currentTotalCount = data.total_count || 0;
+                if (data.results && data.results.length > 0) {
+                    renderResults(data.results);
+                    $resultsCount.textContent = `${currentTotalCount} total · Page ${currentPage} of ${Math.ceil(currentTotalCount / currentPageSize) || 1}`;
+                    $resultsSection.style.display = 'block';
+                    updatePagination();
+                } else {
+                    document.getElementById('doc-cards').innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-dim)">No results found.</div>';
+                    $resultsCount.textContent = '0 results';
+                    $resultsSection.style.display = 'block';
+                    $pagination.style.display = 'none';
+                }
+
+                setStep(5, 'done');
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                $loading.style.display = 'none';
+            }
+        }
+
+        // Recursively flatten an object into dot-notation key-value pairs
+        function deepFlatten(obj, prefix = '') {
+            const result = {};
+            if (obj === null || obj === undefined) return result;
+            if (Array.isArray(obj)) {
+                obj.forEach((item, i) => {
+                    const key = prefix ? `${prefix}[${i}]` : `[${i}]`;
+                    if (typeof item === 'object' && item !== null) {
+                        Object.assign(result, deepFlatten(item, key));
+                    } else {
+                        result[key] = item;
+                    }
+                });
+            } else if (typeof obj === 'object') {
+                for (const [k, v] of Object.entries(obj)) {
+                    const key = prefix ? `${prefix}.${k}` : k;
+                    if (typeof v === 'object' && v !== null) {
+                        Object.assign(result, deepFlatten(v, key));
+                    } else {
+                        result[key] = v;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /**
+         * Extract the meaningful record data from a pipeline result document.
+         * After $unwind, the actual data is in doc.data (flat object) or doc.extracted_data,
+         * or for $facet results it may be in doc.record.
+         */
+        function extractRecordData(doc) {
+            // After $unwind on "data", doc.data is the unwound inner object
+            // After $unwind on "extracted_data", doc.extracted_data is the unwound object
+            // After $facet with $replaceRoot, doc.record might hold it
+            const skip = new Set(['_id', 'schema', 'doc_id', '_data_root', 'record', 'source_type', 'timestamp']);
+
+            // Check if doc.data is a flat object (not array — it's been unwound)
+            if (doc.data && typeof doc.data === 'object' && !Array.isArray(doc.data)) {
+                return doc.data;
+            }
+            // Check extracted_data
+            if (doc.extracted_data && typeof doc.extracted_data === 'object' && !Array.isArray(doc.extracted_data)) {
+                return doc.extracted_data;
+            }
+            // Check record (from $facet + $replaceRoot)
+            if (doc.record && typeof doc.record === 'object') {
+                return doc.record;
+            }
+            // Fallback: return all non-meta fields
+            const result = {};
+            for (const [k, v] of Object.entries(doc)) {
+                if (!skip.has(k)) result[k] = v;
+            }
+            return result;
+        }
+
+        /**
+         * Check if a value is table-like: an array of objects with consistent keys.
+         */
+        function isTabularArray(arr) {
+            if (!Array.isArray(arr) || arr.length === 0) return false;
+            const objectItems = arr.filter(item => typeof item === 'object' && item !== null && !Array.isArray(item));
+            return objectItems.length >= 2;
+        }
+
+        /**
+         * Render a tabular array as an HTML table with column headers.
+         */
+        function renderTable(arr) {
+            const items = arr.filter(item => typeof item === 'object' && item !== null);
+            // Collect all unique keys across items
+            const allKeys = [];
+            const keySet = new Set();
+            items.forEach(item => {
+                Object.keys(item).forEach(k => {
+                    if (!keySet.has(k)) { keySet.add(k); allKeys.push(k); }
+                });
+            });
+
+            let html = '<div class="data-table-wrapper"><table class="data-table"><thead><tr>';
+            allKeys.forEach(k => {
+                html += `<th>${escHtml(k)}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+            items.forEach(item => {
+                html += '<tr>';
+                allKeys.forEach(k => {
+                    const val = item[k];
+                    let display = '';
+                    if (val === null || val === undefined) {
+                        display = '<span class="null-val">null</span>';
+                    } else if (typeof val === 'object') {
+                        display = `<span class="obj-val">${escHtml(JSON.stringify(val))}</span>`;
+                    } else {
+                        display = escHtml(String(val));
+                    }
+                    html += `<td>${display}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        /**
+         * Render a flat key-value object as a compact 2-column table.
+         */
+        function renderKeyValueTable(obj) {
+            let html = '<table class="fv-table">';
+            for (const [field, value] of Object.entries(obj)) {
+                if (typeof value === 'object' && value !== null) continue; // skip nested for now
+                html += `<tr>
+                    <td>${escHtml(field)}</td>
+                    <td>${(value !== null && value !== undefined) ? escHtml(String(value)) : '<span class="null-val">null</span>'}</td>
+                </tr>`;
+            }
+            html += '</table>';
+            return html;
+        }
+
+        function renderResults(results) {
+            const $cards = document.getElementById('doc-cards');
+            $cards.innerHTML = '';
+
+            // Check if results are all flat objects with the same keys → render as one big table
+            const records = results.map(doc => extractRecordData(doc));
+            const docIds = results.map(doc => doc.doc_id || doc._id || null);
+
+            // Check if all records are flat (no nested arrays) and share similar keys
+            const allFlat = records.every(r => {
+                return Object.values(r).every(v => typeof v !== 'object' || v === null);
+            });
+
+            if (allFlat && records.length > 1) {
+                // Render all results as a single table (like a spreadsheet)
+                renderAsUnifiedTable(records, docIds, $cards);
+                return;
+            }
+
+            // Otherwise, render each result as an expandable card
+            records.forEach((record, idx) => {
+                const card = document.createElement('div');
+                card.className = 'doc-card';
+
+                // Card header — clickable to toggle
+                const header = document.createElement('div');
+                header.className = 'doc-card-header';
+                const docLabel = docIds[idx] || `Result ${idx + 1}`;
+                const previewText = getRecordPreview(record);
+                header.innerHTML = `
+                    <span class="expand-icon">▶</span>
+                    <span>${escHtml(String(docLabel))}</span>
+                    <span class="doc-label">${escHtml(previewText)}</span>
+                `;
+                header.style.cursor = 'pointer';
+                card.appendChild(header);
+
+                // Card body — initially collapsed
+                const body = document.createElement('div');
+                body.className = 'doc-card-body collapsed';
+
+                // Render record content
+                body.innerHTML = renderRecordContent(record);
+
+                card.appendChild(body);
+                $cards.appendChild(card);
+
+                // Toggle expand/collapse
+                header.addEventListener('click', () => {
+                    const isCollapsed = body.classList.contains('collapsed');
+                    body.classList.toggle('collapsed');
+                    header.querySelector('.expand-icon').textContent = isCollapsed ? '▼' : '▶';
+                });
+            });
+
+            // Auto-expand first card
+            const firstBody = $cards.querySelector('.doc-card-body');
+            const firstHeader = $cards.querySelector('.doc-card-header');
+            if (firstBody) {
+                firstBody.classList.remove('collapsed');
+                firstHeader.querySelector('.expand-icon').textContent = '▼';
+            }
+        }
+
+        /**
+         * Render all results as a single unified table (for flat records).
+         */
+        function renderAsUnifiedTable(records, docIds, container) {
+            const allKeys = [];
+            const keySet = new Set();
+            records.forEach(r => {
+                Object.keys(r).forEach(k => {
+                    if (!keySet.has(k)) { keySet.add(k); allKeys.push(k); }
+                });
+            });
+
+            let html = '<div class="data-table-wrapper"><table class="data-table"><thead><tr>';
+            html += '<th>#</th>';
+            allKeys.forEach(k => { html += `<th>${escHtml(k)}</th>`; });
+            html += '</tr></thead><tbody>';
+
+            records.forEach((rec, i) => {
+                html += '<tr>';
+                html += `<td class="row-num">${i + 1}</td>`;
+                allKeys.forEach(k => {
+                    const val = rec[k];
+                    if (val === null || val === undefined)
+                        html += '<td><span class="null-val">null</span></td>';
+                    else
+                        html += `<td>${escHtml(String(val))}</td>`;
+                });
+                html += '</tr>';
+            });
+
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+
+        /**
+         * Get a short preview string from a record for the collapsed card header.
+         */
+        function getRecordPreview(record) {
+            const parts = [];
+            for (const [k, v] of Object.entries(record)) {
+                if (typeof v === 'string' || typeof v === 'number') {
+                    parts.push(`${k}: ${String(v).substring(0, 30)}`);
+                    if (parts.length >= 3) break;
+                }
+            }
+            return parts.join(' · ') || 'Click to expand';
+        }
+
+        /**
+         * Render the full content of a record, handling nested arrays as sub-tables.
+         */
+        function renderRecordContent(record) {
+            let html = '';
+            const flatFields = {};
+            const arrayFields = {};
+
+            for (const [key, value] of Object.entries(record)) {
+                if (Array.isArray(value) && isTabularArray(value)) {
+                    arrayFields[key] = value;
+                } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                    // Nested object — flatten into flat fields with prefix
+                    for (const [subK, subV] of Object.entries(value)) {
+                        if (typeof subV !== 'object' || subV === null) {
+                            flatFields[`${key}.${subK}`] = subV;
+                        }
+                    }
+                } else {
+                    flatFields[key] = value;
+                }
+            }
+
+            // Render flat fields as key-value table
+            if (Object.keys(flatFields).length > 0) {
+                html += renderKeyValueTable(flatFields);
+            }
+
+            // Render array fields as sub-tables
+            for (const [key, arr] of Object.entries(arrayFields)) {
+                html += `<div class="sub-table-section">
+                    <div class="sub-table-header">${escHtml(key)} (${arr.length} items)</div>
+                    ${renderTable(arr)}
+                </div>`;
+            }
+
+            return html || '<div style="padding: 16px; color: var(--text-dim)">No data fields found</div>';
+        }
+
+        // Pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(currentTotalCount / currentPageSize) || 1;
+            $pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            $prevBtn.disabled = currentPage <= 1;
+            $nextBtn.disabled = currentPage >= totalPages;
+            $pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+        }
+
+        $prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--; executeSearch(); }
+        });
+        $nextBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(currentTotalCount / currentPageSize) || 1;
+            if (currentPage < totalPages) { currentPage++; executeSearch(); }
+        });
+
+        // Refresh schema
+        $refreshBtn.addEventListener('click', async () => {
+            const col = $collection.value.trim();
+            if (!col) { showError('Please enter a collection name.'); return; }
+
+            showLoading('Refreshing schema...');
+            clearError();
+            try {
+                // Updated fetch call
+                const res = await fetch(`${API_BASE_URL}/refresh-schema`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ collection: col })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    await loadSchema();
+                } else {
+                    showError('Failed to refresh schema.');
+                }
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                $loading.style.display = 'none';
+            }
+        });
+
+        // Helpers
+        function showLoading(msg) {
+            $loadingTxt.textContent = msg || 'Processing...';
+            $loading.style.display = 'block';
+        }
+        function showError(msg) {
+            $errorMsg.textContent = msg;
+            $errorMsg.style.display = 'block';
+        }
+        function clearError() {
+            $errorMsg.textContent = '';
+            $errorMsg.style.display = 'none';
+        }
+        function escHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        // Auto-load schema on page load
+        window.addEventListener('DOMContentLoaded', loadSchema);
+        $collection.addEventListener('change', loadSchema);
+    </script>
+</body>
+
+</html>

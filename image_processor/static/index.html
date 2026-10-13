@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Image Processor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f4f4f9;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .upload-area:hover {
+            background: #f9f9f9;
+            border-color: #666;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:disabled {
+            background: #ccc;
+        }
+
+        .status-card {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #28a745;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .log {
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #resultContainer {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Processor</h1>
+        <p>Upload an Image to process on the distributed cluster using Groq VLM.</p>
+
+        <div id="fileProtocolWarning" class="hidden"
+            style="background: #ffcccc; color: #cc0000; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #cc0000;">
+            <strong>⚠️ Security Warning:</strong> You have opened this file directly from your computer.
+            Browsers block requests (CORS) when using the <code>file://</code> protocol.
+            <br><br>
+            Please access this page via: <a href="http://localhost:8001"
+                style="font-weight: bold; color: #cc0000;">http://localhost:8001</a>
+        </div>
+
+        <div class="upload-area" id="dropArea">
+            <p>Drag & Drop your Image here or click to select</p>
+            <input type="file" id="fileInput" accept="image/*" class="hidden">
+        </div>
+
+        <div id="statusList">
+            <!-- Status items will appear here -->
+        </div>
+
+        <div id="loadExistingContainer" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+            <h3>Processed Documents (Ready for Verification)</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Select a document below to view its data and
+                save to MongoDB.</p>
+
+            <div id="existingList"
+                style="margin-top: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+                <div id="docLinks" style="max-height: 300px; overflow-y: auto;">
+                    <p style="color: #999;">Loading documents...</p>
+                </div>
+            </div>
+            <button id="refreshListBtn"
+                style="margin-top: 10px; background: #6c757d; font-size: 12px; padding: 5px 10px;">Refresh List</button>
+        </div>
+
+        <div id="resultContainer" class="hidden">
+            <hr>
+            <h2>Extracted Results</h2>
+            <div id="tableWrapper" style="overflow-x: auto;">
+                <table id="resultTable">
+                    <thead>
+                        <tr id="tableHeader"></tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+            <div style="margin-top: 20px;">
+                <button id="saveBtn">Verify & Save to MongoDB</button>
+            </div>
+            <div id="saveStatus" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const statusList = document.getElementById('statusList');
+        const resultContainer = document.getElementById('resultContainer');
+        const docLinks = document.getElementById('docLinks');
+        const refreshListBtn = document.getElementById('refreshListBtn');
+
+        const API_BASE = ""; // Relative path
+
+        // Initial Load
+        window.addEventListener('load', loadProcessedDocs);
+        refreshListBtn.addEventListener('click', loadProcessedDocs);
+
+        async function loadProcessedDocs() {
+            docLinks.innerHTML = '<p style="color: #666;">Loading...</p>';
+            try {
+                const res = await fetch(API_BASE + '/list-processed');
+                const data = await res.json();
+                docLinks.innerHTML = '';
+
+                if (data.documents && data.documents.length > 0) {
+                    data.documents.forEach(docId => {
+                        const div = document.createElement('div');
+                        div.className = 'doc-item';
+                        div.style.padding = '8px 10px';
+                        div.style.borderBottom = '1px solid #f0f0f0';
+                        div.style.cursor = 'pointer';
+                        div.style.display = 'flex';
+                        div.style.justifyContent = 'space-between';
+                        div.style.alignItems = 'center';
+                        div.style.transition = 'background 0.2s';
+
+                        div.onmouseover = () => { div.style.background = '#f8f9fa'; };
+                        div.onmouseout = () => { div.style.background = 'transparent'; };
+
+                        div.innerHTML = `
+                            <span style="font-weight: 500; color: #007bff;">${docId}</span>
+                            <span style="font-size: 11px; color: #aaa;">JSON</span>
+                        `;
+                        div.onclick = () => {
+                            // Highlight selected
+                            document.querySelectorAll('.doc-item').forEach(el => el.style.background = 'transparent');
+                            div.style.background = '#e2e6ea';
+                            div.onmouseover = null;
+                            div.onmouseout = null;
+
+                            fetchAndShowResult(docId);
+                        };
+                        docLinks.appendChild(div);
+                    });
+                } else {
+                    docLinks.innerHTML = '<p style="padding: 10px; color: #666;">No processed documents found in bucket.</p>';
+                }
+            } catch (e) {
+                console.error("Error listing docs:", e);
+                docLinks.innerHTML = `<p style="padding: 10px; color: red;">Error loading list: ${e.message}</p>`;
+            }
+        };
+
+        // Protocol Check
+        if (window.location.protocol === 'file:') {
+            document.getElementById('fileProtocolWarning').classList.remove('hidden');
+        }
+        const tableHeader = document.getElementById('tableHeader');
+        const tableBody = document.getElementById('tableBody');
+        const saveBtn = document.getElementById('saveBtn');
+        const saveStatus = document.getElementById('saveStatus');
+
+        dropArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFiles);
+
+        dropArea.addEventListener('dragover', (e) => { e.preventDefault(); dropArea.style.background = '#e9ecef'; });
+        dropArea.addEventListener('dragleave', () => { dropArea.style.background = 'transparent'; });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.background = 'transparent';
+            if (e.dataTransfer.files.length) uploadFile(e.dataTransfer.files[0]);
+        });
+
+        function handleFiles() {
+            if (fileInput.files.length) uploadFile(fileInput.files[0]);
+        }
+
+        async function uploadFile(file) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const statusId = "s-" + Date.now();
+            addStatusCard(statusId, file.name);
+
+            try {
+                // Use relative URL to ensure it hits the FastAPI server that served this page
+                const response = await fetch(API_BASE + '/upload', { method: 'POST', body: formData });
+                if (!response.ok) throw new Error("Upload failed");
+                const data = await response.json();
+                pollStatus(data.doc_id, statusId);
+            } catch (e) {
+                updateStatusCard(statusId, "Error uploading: " + e.message, 0, "error");
+            }
+        }
+
+        function addStatusCard(id, filename) {
+            const div = document.createElement('div');
+            div.className = 'status-card';
+            div.id = id;
+            div.innerHTML = `
+                <div><strong>${filename}</strong> <span class="badge">Uploading...</span></div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div class="log">Waiting for server...</div>
+            `;
+            statusList.prepend(div);
+        }
+
+        function updateStatusCard(id, statusText, percent, phase) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.querySelector('.badge').textContent = phase;
+            el.querySelector('.log').textContent = statusText;
+            el.querySelector('.progress-fill').style.width = percent + '%';
+        }
+
+        async function pollStatus(docId, elementId) {
+            const interval = setInterval(async () => {
+                try {
+                    const res = await fetch(API_BASE + `/status/${docId}`);
+                    const data = await res.json();
+
+                    let percent = 0;
+                    let text = `Status: ${data.status}`;
+                    let phase = data.phase || 'init';
+
+                    if (data.status === 'completed') {
+                        percent = 100;
+                        text = "Completed!";
+                        phase = "Done";
+                        clearInterval(interval);
+                        fetchAndShowResult(docId);
+                    }
+                    else if (phase === 'queued' || phase === 'downloading_image') percent = 10;
+                    else if (phase === 'inferring_schema') percent = 20;
+                    else if (phase === 'chunking') percent = 30;
+                    else if (phase === 'processing') {
+                        const total = parseInt(data.total_chunks) || 1;
+                        const processed = parseInt(data.processed_chunks) || 0;
+                        percent = 30 + ((processed / total) * 60); // 30% to 90%
+                        text = `Processing: ${processed} / ${total} chunks`;
+                    }
+                    else if (phase === 'merging') {
+                        percent = 95;
+                        text = "Merging results...";
+                    }
+                    else if (data.status && data.status.startsWith('error')) {
+                        phase = "Error";
+                        text = data.status;
+                        clearInterval(interval);
+                    }
+
+                    updateStatusCard(elementId, text, percent, phase);
+
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 2000);
+        }
+
+        async function fetchAndShowResult(docId) {
+            try {
+                const res = await fetch(API_BASE + `/result/${docId}`);
+                const result = await res.json();
+
+                // Assuming result.data contains the list of extracted items
+                const data = result.data || [];
+                displayResultTable(data, docId);
+            } catch (e) {
+                console.error("Error fetching results:", e);
+            }
+        }
+
+        function displayResultTable(data, docId) {
+            let flattenedData = [];
+
+            // 1. Normalize to array
+            let rawList = Array.isArray(data) ? data : [data];
+
+            // 2. Unwrap each item if needed
+            rawList.forEach(item => {
+                if (Array.isArray(item)) {
+                    flattenedData.push(...item);
+                } else if (typeof item === 'object' && item !== null) {
+                    // Check if this object is a wrapper for a list
+                    // Heuristic: if it has 1 key and that value is an array
+                    const keys = Object.keys(item);
+                    if (keys.length === 1 && Array.isArray(item[keys[0]])) {
+                        flattenedData.push(...item[keys[0]]);
+                    } else if (item.data && Array.isArray(item.data)) {
+                        // Common wrapper "data": [...]
+                        flattenedData.push(...item.data);
+                    } else {
+                        // It's likely a single row object itself
+                        flattenedData.push(item);
+                    }
+                }
+            });
+
+            if (!flattenedData || flattenedData.length === 0) {
+                console.log("No data to display");
+                const div = document.createElement('div');
+                div.innerHTML = `<p style="color: grey;">No records found in this document.</p>`;
+                tableBody.appendChild(div);
+                resultContainer.classList.remove('hidden');
+                return;
+            }
+
+            // Reset table
+            tableHeader.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            // Get keys from first item
+            const keys = Object.keys(flattenedData[0] || {});
+
+            // Create header
+            keys.forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                tableHeader.appendChild(th);
+            });
+
+            // Create rows
+            flattenedData.forEach(item => {
+                const tr = document.createElement('tr');
+                keys.forEach(key => {
+                    const td = document.createElement('td');
+                    let val = item[key];
+                    if (val && typeof val === 'object') {
+                        // Better display for objects/arrays
+                        td.innerHTML = `<div style="font-size: 11px; color: #555; max-height: 100px; overflow-y: auto;">
+                            ${JSON.stringify(val, null, 2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')}
+                        </div>`;
+                    } else {
+                        td.textContent = val !== undefined ? val : '';
+                    }
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            resultContainer.classList.remove('hidden');
+
+            saveBtn.onclick = () => saveToMongo(docId, flattenedData);
+        }
+
+        async function saveToMongo(docId, data) {
+            saveBtn.disabled = true;
+            saveStatus.textContent = "Saving to MongoDB...";
+            try {
+                const res = await fetch(API_BASE + `/save-to-mongo/${docId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    saveStatus.innerHTML = `<span style="color: green;">Successfully saved ${result.inserted_ids.length} records to MongoDB!</span>`;
+                } else {
+                    throw new Error(result.detail || "Failed to save");
+                }
+            } catch (e) {
+                saveStatus.innerHTML = `<span style="color: red;">Error: ${e.message}</span>`;
+                saveBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

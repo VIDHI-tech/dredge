@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Identity Tree · Org Chart View</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f0f14;
+            --bg-secondary: #16161e;
+            --bg-tertiary: #1e1e2a;
+            --bg-hover: #262636;
+            --border: #2a2a3a;
+            --text-primary: #e2e2f0;
+            --text-secondary: #9090a8;
+            --text-muted: #5e5e76;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --accent-glow: #7c3aed55;
+            --emphasis: #f59e0b;
+            --radius: 8px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ---- Sidebar ---- */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+        }
+
+        #sidebar-header {
+            padding: 20px 20px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        #sidebar-header h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #sidebar-header h1::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+        }
+
+        .sidebar-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            margin-top: 16px;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .ai-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            margin-bottom: 8px;
+        }
+
+        .ai-toggle input[type="checkbox"] {
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .ai-toggle label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+            color: white;
+            box-shadow: 0 2px 12px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            margin-top: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        #sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        #status-bar {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            text-align: center;
+            min-height: 1.2em;
+        }
+
+        #status-bar.loading {
+            color: var(--emphasis);
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.8rem;
+            outline: none;
+            transition: border-color var(--transition);
+        }
+
+        #search-input:focus {
+            border-color: var(--accent);
+        }
+
+        #search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 6px 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-light);
+        }
+
+        /* ---- Tree Container ---- */
+        #tree-container {
+            position: fixed;
+            top: 0;
+            left: 280px;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #12121a 0%, var(--bg-primary) 70%);
+        }
+
+        #tree-container svg {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        #tree-container svg:active {
+            cursor: grabbing;
+        }
+
+        /* ---- Tree Nodes ---- */
+        .node-card {
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
+
+        .node-card:hover {
+            filter: brightness(1.15);
+        }
+
+        .node-card rect {
+            rx: 10;
+            ry: 10;
+            stroke-width: 1.5;
+        }
+
+        .node-link {
+            fill: none;
+            stroke: #3a3a52;
+            stroke-width: 1.5;
+            stroke-dasharray: none;
+        }
+
+        /* ---- Pan/Zoom Controls ---- */
+        .zoom-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 100;
+        }
+
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+
+        .zoom-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 280px;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 15, 20, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 300;
+        }
+
+        .loading-overlay .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-overlay .msg {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Expand / collapse indicator */
+        .expand-indicator {
+            font-size: 10px;
+            fill: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div id="sidebar-header">
+            <h1>User Identity Tree</h1>
+        </div>
+        <div class="sidebar-content">
+            <div class="section-title">Configuration</div>
+            <div class="ai-toggle">
+                <input type="checkbox" id="use-llm" checked>
+                <label for="use-llm">Use AI to group related fields</label>
+            </div>
+
+            <div class="section-title">Search</div>
+            <input type="text" id="search-input" placeholder="Search users…">
+
+            <div id="stats-section" style="display: none;">
+                <div class="section-title">Statistics</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-users">0</div>
+                        <div class="stat-label">Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-categories">0</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">Navigation</div>
+            <p style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.5;">
+                <strong>Click</strong> a card to expand/collapse.<br>
+                <strong>Scroll</strong> to zoom in/out.<br>
+                <strong>Drag</strong> to pan the view.
+            </p>
+
+            <div class="section-title" style="margin-top: 20px;">Other Views</div>
+            <a href="/" class="nav-link">← Sunburst Explorer</a>
+        </div>
+        <div id="sidebar-footer">
+            <button class="btn btn-primary" id="generate-btn">Generate Tree</button>
+            <button class="btn btn-secondary" id="collapse-all-btn" style="display: none;">Collapse All</button>
+            <div id="status-bar"></div>
+        </div>
+    </div>
+
+    <div id="tree-container"></div>
+
+    <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in" title="Zoom in">+</button>
+        <button class="zoom-btn" id="zoom-out" title="Zoom out">−</button>
+        <button class="zoom-btn" id="zoom-fit" title="Fit to screen">⊡</button>
+    </div>
+
+    <script>
+        const API_BASE = window.location.protocol === 'file:' ? 'http://localhost:8001' : '';
+        let treeData = null;
+        let svg, g, zoomBehavior;
+
+        // ---- Color palette per category ----
+        const categoryColors = {
+            'location': { bg: '#1a2332', border: '#2563eb', header: '#3b82f6', accent: '#60a5fa' },
+            'political': { bg: '#241a2e', border: '#7c3aed', header: '#8b5cf6', accent: '#a78bfa' },
+            'office': { bg: '#1f2a1a', border: '#16a34a', header: '#22c55e', accent: '#4ade80' },
+            'financial': { bg: '#2a2414', border: '#d97706', header: '#f59e0b', accent: '#fbbf24' },
+            'employer': { bg: '#2a1a1a', border: '#dc2626', header: '#ef4444', accent: '#f87171' },
+            'other': { bg: '#1e1e2a', border: '#4b5563', header: '#6b7280', accent: '#9ca3af' },
+        };
+
+        const userCardColor = { bg: '#1a1a2e', border: '#7c3aed', header: '#6d28d9', accent: '#a78bfa' };
+        const rootCardColor = { bg: '#16161e', border: '#3a3a52', header: '#2a2a3a', accent: '#5e5e76' };
+
+        // ---- Node dimensions ----
+        const NODE_WIDTH = 260;
+        const NODE_HEIGHT_USER = 80;
+        const NODE_HEIGHT_CAT = 44;
+        const NODE_HEIGHT_LEAF = 32;
+        const H_SPACING = 300;
+        const V_SPACING = 50;
+
+        // ---- Status ----
+        const statusBar = document.getElementById('status-bar');
+        function setStatus(msg, isLoading = false) {
+            statusBar.textContent = msg;
+            statusBar.className = isLoading ? 'loading' : '';
+        }
+
+        function showLoading(msg) {
+            let overlay = document.getElementById('loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'loading-overlay';
+                overlay.className = 'loading-overlay';
+                overlay.innerHTML = `<div class="spinner"></div><div class="msg">${msg}</div>`;
+                document.body.appendChild(overlay);
+            } else {
+                overlay.querySelector('.msg').textContent = msg;
+                overlay.style.display = 'flex';
+            }
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        // ---- Tree Rendering ----
+        function renderTree(data) {
+            const container = document.getElementById('tree-container');
+            container.innerHTML = '';
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const svgEl = d3.select(container).append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            g = svgEl.append('g');
+
+            // Zoom behavior
+            zoomBehavior = d3.zoom()
+                .scaleExtent([0.1, 3])
+                .on('zoom', (event) => {
+                    g.attr('transform', event.transform);
+                });
+
+            svgEl.call(zoomBehavior);
+            svg = svgEl;
+
+            // Create hierarchy
+            const root = d3.hierarchy(data);
+
+            // Start with only root expanded (user nodes visible, deeper collapsed)
+            root.children && root.children.forEach(child => {
+                if (child.children) {
+                    child._children = child.children;
+                    child.children = null;
+                }
+            });
+
+            root._data = data;
+            update(root, root);
+
+            // Center view
+            const initialTransform = d3.zoomIdentity
+                .translate(width / 2, 60)
+                .scale(0.8);
+            svgEl.call(zoomBehavior.transform, initialTransform);
+        }
+
+        function getNodeHeight(d) {
+            const type = d.data.type;
+            if (type === 'user') return NODE_HEIGHT_USER;
+            if (type === 'category') return NODE_HEIGHT_CAT;
+            if (type === 'leaf') return NODE_HEIGHT_LEAF;
+            return NODE_HEIGHT_USER; // root
+        }
+
+        function update(source, root) {
+            const treeLayout = d3.tree()
+                .nodeSize([NODE_WIDTH + 30, 130])
+                .separation((a, b) => {
+                    return a.parent === b.parent ? 1 : 1.2;
+                });
+
+            treeLayout(root);
+
+            // ---- Links ----
+            const links = root.links();
+            const linkSel = g.selectAll('.node-link')
+                .data(links, d => d.target.data.name + (d.target.depth || ''));
+
+            // Enter
+            const linkEnter = linkSel.enter()
+                .append('path')
+                .attr('class', 'node-link')
+                .attr('d', d => {
+                    const o = { x: source.x || 0, y: source.y || 0 };
+                    return linkPath({ x: o.x, y: o.y }, { x: o.x, y: o.y });
+                });
+
+            // Update + Enter
+            linkEnter.merge(linkSel)
+                .transition().duration(500)
+                .attr('d', d => linkPath(d.source, d.target));
+
+            // Exit
+            linkSel.exit()
+                .transition().duration(300)
+                .attr('d', d => {
+                    const o = { x: source.x || 0, y: source.y || 0 };
+                    return linkPath({ x: o.x, y: o.y }, { x: o.x, y: o.y });
+                })
+                .remove();
+
+            // ---- Nodes ----
+            const nodes = root.descendants();
+            const nodeSel = g.selectAll('.node-card')
+                .data(nodes, d => d.data.name + d.depth);
+
+            // Enter
+            const nodeEnter = nodeSel.enter()
+                .append('g')
+                .attr('class', 'node-card')
+                .attr('transform', `translate(${source.x || 0},${source.y || 0})`)
+                .on('click', (event, d) => {
+                    event.stopPropagation();
+                    toggleNode(d, root);
+                });
+
+            nodeEnter.each(function (d) {
+                const el = d3.select(this);
+                const nh = getNodeHeight(d);
+                const nw = NODE_WIDTH;
+                const colors = getNodeColors(d);
+
+                // Card background
+                el.append('rect')
+                    .attr('x', -nw / 2)
+                    .attr('y', -nh / 2)
+                    .attr('width', nw)
+                    .attr('height', nh)
+                    .attr('rx', 10)
+                    .attr('ry', 10)
+                    .attr('fill', colors.bg)
+                    .attr('stroke', colors.border)
+                    .attr('stroke-width', 1.5);
+
+                // Header bar
+                el.append('rect')
+                    .attr('x', -nw / 2)
+                    .attr('y', -nh / 2)
+                    .attr('width', nw)
+                    .attr('height', d.data.type === 'leaf' ? nh : Math.min(28, nh * 0.5))
+                    .attr('rx', 10)
+                    .attr('ry', 10)
+                    .attr('fill', colors.header)
+                    .attr('opacity', 0.3);
+
+                // Bottom-left clip for header (square corners at bottom)
+                if (d.data.type !== 'leaf') {
+                    el.append('rect')
+                        .attr('x', -nw / 2)
+                        .attr('y', -nh / 2 + 18)
+                        .attr('width', nw)
+                        .attr('height', 10)
+                        .attr('fill', colors.header)
+                        .attr('opacity', 0.3);
+                }
+
+                // Name text
+                if (d.data.type === 'root') {
+                    el.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('y', -nh / 2 + 18)
+                        .attr('fill', colors.accent)
+                        .attr('font-size', '13px')
+                        .attr('font-weight', '700')
+                        .text('🗄 ' + truncate(d.data.name, 28));
+
+                    const userCount = (d.data.children || []).length;
+                    el.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('y', -nh / 2 + 38)
+                        .attr('fill', '#5e5e76')
+                        .attr('font-size', '11px')
+                        .text(`${userCount} users`);
+
+                    // Expand indicator
+                    if (d._children || d.children) {
+                        el.append('text')
+                            .attr('class', 'expand-indicator')
+                            .attr('text-anchor', 'middle')
+                            .attr('y', nh / 2 - 8)
+                            .text(d._children ? '▸ expand' : '▾ collapse');
+                    }
+
+                } else if (d.data.type === 'user') {
+                    // User card: name + identifier badges + stats
+                    el.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('y', -nh / 2 + 20)
+                        .attr('fill', '#e2e2f0')
+                        .attr('font-size', '12px')
+                        .attr('font-weight', '700')
+                        .text('👤 ' + truncate(d.data.name, 26));
+
+                    // Identifiers row
+                    const ids = d.data.identifiers || {};
+                    const idEntries = Object.entries(ids).slice(0, 3);
+                    if (idEntries.length > 0) {
+                        const idText = idEntries.map(([k, v]) => `${k}: ${truncate(v, 15)}`).join(' · ');
+                        el.append('text')
+                            .attr('text-anchor', 'middle')
+                            .attr('y', -nh / 2 + 38)
+                            .attr('fill', '#a78bfa')
+                            .attr('font-size', '9px')
+                            .attr('font-family', "'JetBrains Mono', monospace")
+                            .text(truncate(idText, 36));
+                    }
+
+                    // Stats row
+                    const stats = d.data.stats || {};
+                    el.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('y', -nh / 2 + 55)
+                        .attr('fill', '#5e5e76')
+                        .attr('font-size', '9px')
+                        .text(`${stats.categories || 0} categories · ${stats.fields || 0} fields`);
+
+                    // Expand indicator
+                    if (d._children || d.children) {
+                        el.append('text')
+                            .attr('class', 'expand-indicator')
+                            .attr('text-anchor', 'middle')
+                            .attr('y', nh / 2 - 6)
+                            .text(d._children ? '▸ click to expand' : '▾ collapse');
+                    }
+
+                } else if (d.data.type === 'category') {
+                    const catKey = d.data.category_key || 'other';
+                    el.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('y', 0)
+                        .attr('fill', (categoryColors[catKey] || categoryColors.other).accent)
+                        .attr('font-size', '11px')
+                        .attr('font-weight', '600')
+                        .text(d.data.name);
+
+                    // Child count badge
+                    const childCount = (d.data.children || []).length;
+                    el.append('text')
+                        .attr('text-anchor', 'end')
+                        .attr('x', nw / 2 - 12)
+                        .attr('y', 0)
+                        .attr('fill', '#5e5e76')
+                        .attr('font-size', '9px')
+                        .text(`${childCount}`);
+
+                    if (d._children || d.children) {
+                        el.append('text')
+                            .attr('class', 'expand-indicator')
+                            .attr('text-anchor', 'start')
+                            .attr('x', -nw / 2 + 12)
+                            .attr('y', 0)
+                            .text(d._children ? '▸' : '▾');
+                    }
+
+                } else if (d.data.type === 'leaf') {
+                    el.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('y', 2)
+                        .attr('fill', '#e2e2f0')
+                        .attr('font-size', '10px')
+                        .attr('font-family', "'JetBrains Mono', monospace")
+                        .text(truncate(d.data.name, 32));
+                }
+            });
+
+            // Update position (Enter + existing)
+            nodeEnter.merge(nodeSel)
+                .transition().duration(500)
+                .attr('transform', d => `translate(${d.x},${d.y})`);
+
+            // Exit
+            nodeSel.exit()
+                .transition().duration(300)
+                .attr('transform', `translate(${source.x || 0},${source.y || 0})`)
+                .style('opacity', 0)
+                .remove();
+
+            // Save old positions
+            nodes.forEach(d => {
+                d.x0 = d.x;
+                d.y0 = d.y;
+            });
+        }
+
+        function getNodeColors(d) {
+            if (d.data.type === 'root') return rootCardColor;
+            if (d.data.type === 'user') return userCardColor;
+            if (d.data.type === 'category') {
+                const catKey = d.data.category_key || 'other';
+                return categoryColors[catKey] || categoryColors.other;
+            }
+            // Leaf inherits parent category color but dimmer
+            if (d.parent && d.parent.data.type === 'category') {
+                const catKey = d.parent.data.category_key || 'other';
+                const c = categoryColors[catKey] || categoryColors.other;
+                return { bg: c.bg, border: '#2a2a3a', header: c.bg, accent: c.accent };
+            }
+            return rootCardColor;
+        }
+
+        function linkPath(s, t) {
+            return `M ${s.x},${s.y}
+                    C ${s.x},${(s.y + t.y) / 2}
+                      ${t.x},${(s.y + t.y) / 2}
+                      ${t.x},${t.y}`;
+        }
+
+        function toggleNode(d, root) {
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else if (d._children) {
+                d.children = d._children;
+                d._children = null;
+            }
+            // Re-render nodes/links, clear and re-draw
+            g.selectAll('.node-card').remove();
+            g.selectAll('.node-link').remove();
+            update(d, root);
+        }
+
+        function truncate(str, max) {
+            if (!str) return '';
+            return str.length > max ? str.slice(0, max) + '…' : str;
+        }
+
+        // ---- Search ----
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                g.selectAll('.node-card').style('opacity', 1);
+                return;
+            }
+            g.selectAll('.node-card').style('opacity', d => {
+                const name = (d.data.name || '').toLowerCase();
+                const ids = Object.values(d.data.identifiers || {}).join(' ').toLowerCase();
+                return (name.includes(query) || ids.includes(query)) ? 1 : 0.15;
+            });
+        });
+
+        // ---- Zoom Controls ----
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.3);
+        });
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.7);
+        });
+        document.getElementById('zoom-fit').addEventListener('click', () => {
+            const container = document.getElementById('tree-container');
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            svg.transition().duration(500).call(
+                zoomBehavior.transform,
+                d3.zoomIdentity.translate(w / 2, 60).scale(0.7)
+            );
+        });
+
+        // ---- Collapse All ----
+        document.getElementById('collapse-all-btn').addEventListener('click', () => {
+            if (!treeData) return;
+            renderTree(treeData);
+        });
+
+        // ---- Generate ----
+        document.getElementById('generate-btn').addEventListener('click', async () => {
+            const useLLM = document.getElementById('use-llm').checked;
+            const btn = document.getElementById('generate-btn');
+
+            btn.disabled = true;
+            btn.textContent = 'Generating…';
+            setStatus('Building user tree…', true);
+            showLoading('Scanning database and building user tree…');
+
+            try {
+                const res = await fetch(`${API_BASE}/api/user-tree`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target_db: 'test', use_llm: useLLM }),
+                });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+
+                treeData = data.tree;
+                renderTree(treeData);
+
+                // Update stats
+                const userCount = (treeData.children || []).length;
+                const catCount = new Set();
+                (treeData.children || []).forEach(u => {
+                    (u.children || []).forEach(c => catCount.add(c.name));
+                });
+
+                document.getElementById('stat-users').textContent = userCount;
+                document.getElementById('stat-categories').textContent = catCount.size;
+                document.getElementById('stats-section').style.display = 'block';
+                document.getElementById('collapse-all-btn').style.display = 'block';
+
+                setStatus(`${userCount} users loaded`);
+            } catch (err) {
+                setStatus(`Error: ${err.message}`);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Generate Tree';
+                hideLoading();
+            }
+        });
+
+        // ---- Handle Resize ----
+        window.addEventListener('resize', () => {
+            if (treeData) renderTree(treeData);
+        });
+    </script>
+</body>
+
+</html>

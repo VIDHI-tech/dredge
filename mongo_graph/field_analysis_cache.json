@@ -1,0 +1,207 @@
+{
+    "d7507e57da5a98a4c0df17d1c58ba411": [
+        {
+            "concept": "party_affiliation",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Party",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.politicalParty",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.partyAffiliation",
+                "test1.data.N.candidates.N.Party"
+            ]
+        },
+        {
+            "concept": "person_name",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Full Name",
+                "hehe.extracted_data.N.data.N.N.FullName",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.name",
+                "test1.data.N.candidates.N.CandidateName"
+            ]
+        },
+        {
+            "concept": "address",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Address",
+                "hehe.extracted_data.N.data.N.N.EmpAddress",
+                "hehe.extracted_data.N.data.N.N.CityStZip",
+                "hehe.extracted_data.N.data.N.N.Zip",
+                "hehe.extracted_data.N.data.N.N.ZIP",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.address",
+                "hehe.extracted_data.N.data.N.N.EmpCityStZip"
+            ]
+        },
+        {
+            "concept": "date",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Date",
+                "hehe.extracted_data.N.data.N.N.BeginDate",
+                "hehe.extracted_data.N.data.N.N.EndDate",
+                "hehe.extracted_data.N.data.N.N.ReceiptDate",
+                "hehe.extracted_data.N.data.N.N.DepositDate",
+                "hehe.extracted_data.N.data.N.N.ViewIncomplete",
+                "hehe.extracted_data.N.data.N.N.reportingPeriod.periodBeginning",
+                "hehe.extracted_data.N.data.N.N.reportingPeriod.periodEnding"
+            ]
+        },
+        {
+            "concept": "financial_amount",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Amount",
+                "hehe.extracted_data.N.data.N.N.MPFMatchAmou",
+                "hehe.extracted_data.N.data.N.N.contributions",
+                "hehe.extracted_data.N.data.N.N.expenditures",
+                "hehe.extracted_data.N.data.N.N.campaignFundStatus.cash",
+                "hehe.extracted_data.N.data.N.N.campaignFundStatus.totalAssets",
+                "hehe.extracted_data.N.data.N.N.liabilitiesAndFundBalance.totalLiabilityFundBalance",
+                "hehe.extracted_data.N.data.N.N.summaryOfActivity.beginningCashBalance",
+                "hehe.extracted_data.N.data.N.N.summaryOfActivity.endingCashBalance",
+                "hehe.extracted_data.N.data.N.N.summaryOfActivity.cashDisbursements.aggregateExpenses",
+                "hehe.extracted_data.N.data.N.N.summaryOfActivity.cashReceipts.aggregate"
+            ]
+        },
+        {
+            "concept": "candidate_committee",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.CandidateCommittee",
+                "hehe.extracted_data.N.data.N.N.committee",
+                "test1.data.N.campaignCommittees.N.CommitteeTitle"
+            ]
+        },
+        {
+            "concept": "city",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.City",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.address"
+            ]
+        },
+        {
+            "concept": "state",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.State",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.address"
+            ]
+        },
+        {
+            "concept": "zip_code",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Zip",
+                "hehe.extracted_data.N.data.N.N.ZIP",
+                "hehe.extracted_data.N.data.N.N.candidateInfo.address"
+            ]
+        },
+        {
+            "concept": "office_sought",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.election_office",
+                "test1.data.N.candidates.N.OfficeSought",
+                "test1.data.N.campaignCommittees.N.OfficeTargeted"
+            ]
+        }
+    ],
+    "348e5aef211d62537231aac78adda999": [
+        {
+            "concept": "party_affiliation",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Party",
+                "test1.extracted_data.N.Party",
+                "test1.extracted_data.N.candidateInfo.partyAffiliation",
+                "test1.data.N.candidates.N.Party"
+            ]
+        },
+        {
+            "concept": "full_name",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Full Name",
+                "hehe.extracted_data.N.data.N.N.FullName",
+                "test1.extracted_data.N.Full Name",
+                "test1.extracted_data.N.FullName",
+                "test1.extracted_data.N.candidate.name",
+                "test1.extracted_data.N.fullNameOfCandidateOrCommittee"
+            ]
+        },
+        {
+            "concept": "address",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Address",
+                "test1.extracted_data.N.Address",
+                "test1.extracted_data.N.candidateInfo.address",
+                "test1.extracted_data.N.contributions.N.Address"
+            ]
+        },
+        {
+            "concept": "city",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.City",
+                "test1.extracted_data.N.City",
+                "test1.extracted_data.N.contributions.N.City"
+            ]
+        },
+        {
+            "concept": "state",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.State",
+                "test1.extracted_data.N.State",
+                "test1.extracted_data.N.contributions.N.State"
+            ]
+        },
+        {
+            "concept": "zip_code",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.ZIP",
+                "hehe.extracted_data.N.data.N.N.Zip",
+                "test1.extracted_data.N.ZIP",
+                "test1.extracted_data.N.Zip",
+                "test1.extracted_data.N.contributions.N.Zip"
+            ]
+        },
+        {
+            "concept": "employer_information",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.EmployerName",
+                "test1.extracted_data.N.EmployerName",
+                "test1.extracted_data.N.contributions.N.employerData.employerName"
+            ]
+        },
+        {
+            "concept": "candidate_committee",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.CandidateCommittee",
+                "test1.extracted_data.N.CandidateCommittee",
+                "test1.extracted_data.N.fullNameOfCandidateOrCommittee"
+            ]
+        },
+        {
+            "concept": "campaign_fund_status",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.campaignFundStatus.totalAssets",
+                "test1.extracted_data.N.campaignFundStatus.totalAssets",
+                "test1.extracted_data.N.liabilitiesAndFundBalance.totalLiabilityFundBalance"
+            ]
+        },
+        {
+            "concept": "reporting_period",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.reportingPeriod.periodBeginning",
+                "hehe.extracted_data.N.data.N.N.reportingPeriod.periodEnding",
+                "test1.extracted_data.N.reportingPeriod.periodBeginning",
+                "test1.extracted_data.N.reportingPeriod.periodEnding"
+            ]
+        },
+        {
+            "concept": "summary_of_activity",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.summaryOfActivity.cashReceipts.aggregate",
+                "test1.extracted_data.N.summaryOfActivity.cashReceipts.aggregate",
+                "test1.extracted_data.N.summaryOfActivity.cashDisbursements.aggregateExpenses"
+            ]
+        },
+        {
+            "concept": "voter_information",
+            "fields": [
+                "hehe.extracted_data.N.data.N.N.Voter ID",
+                "test1.extracted_data.N.Voter ID",
+                "test1.extracted_data.N.voters.N.VoterID"
+            ]
+        }
+    ]
+}
